@@ -7,28 +7,57 @@
 
 import Foundation
 
-struct MemoryGame<CardContent> {
-    struct Card {
-        var isFaceUp: Bool = true
+struct MemoryGame<CardContent> where CardContent: Equatable {
+    struct Card: Equatable, Identifiable, CustomDebugStringConvertible {
+        var isFaceUp: Bool = false
         var isMatched: Bool = false
         var content: CardContent
+        
+        var id: String
+        var debugDescription: String {
+            "\(id): \(content) \(isFaceUp ? "up" : "down") \(isMatched ? "matched" : "")"
+        }
     }
     
     private(set) var cards: Array<Card>
+    
+    var indexOfTheOneAndOnlyFaceUpCard: Int? {
+        get { cards.indices.filter { index in cards[index].isFaceUp }.only }
+        set { cards.indices.forEach { cards[$0].isFaceUp = $0 == newValue } }
+    }
     
     init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
         cards = []
         for pairIndex in 0..<max(2, numberOfPairsOfCards) {
             let content = cardContentFactory(pairIndex)
-            cards.append(Card(content: content))
-            cards.append(Card(content: content))
+            cards.append(Card(content: content, id: "\(pairIndex + 1)a"))
+            cards.append(Card(content: content, id: "\(pairIndex + 1)b"))
         }
     }
     
-    func choose(_ card: Card) {
+    mutating func choose(_ card: Card) {
+        guard let chooseIndex = cards.firstIndex(where: { $0.id == card.id }),
+              !cards[chooseIndex].isFaceUp && !cards[chooseIndex].isMatched else { return }
+        
+        if let potentialMatchIndex = indexOfTheOneAndOnlyFaceUpCard {
+            if cards[potentialMatchIndex].content == cards[chooseIndex].content {
+                cards[potentialMatchIndex].isMatched = true
+                cards[chooseIndex].isMatched = true
+            }
+        } else {
+            indexOfTheOneAndOnlyFaceUpCard = chooseIndex
+        }
+        cards[chooseIndex].isFaceUp = true
     }
     
     mutating func shuffle() {
         cards.shuffle()
+        print(cards)
+    }
+}
+
+extension Array {
+    var only: Element? {
+        count == 1 ? first : nil
     }
 }
