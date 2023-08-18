@@ -8,6 +8,7 @@
 import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
+    
     struct Card: Equatable, Identifiable, CustomDebugStringConvertible {
         var isFaceUp: Bool = false
         var isMatched: Bool = false

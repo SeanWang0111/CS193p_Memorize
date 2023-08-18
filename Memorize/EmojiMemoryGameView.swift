@@ -8,31 +8,26 @@
 import SwiftUI
 
 struct EmojiMemoryGameView: View {
+    
     @ObservedObject var viewModel: EmojiMemoryGame
+    
+    private let aspectRatio: CGFloat = 2/3
     
     var body: some View {
         VStack {
-            ScrollView {
-                cards
-                    .animation(.default, value: viewModel.cards)
-            }
-            Button("shuffle") {
-                viewModel.shuffle()
-            }
+            cards.animation(.default, value: viewModel.cards)
+            Button("shuffle") { viewModel.shuffle() }
         }
         .padding(.horizontal)
     }
     
-    var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 70), spacing: 10)], spacing: 10) {
-            ForEach(viewModel.cards) { card in
-                CardView(card)
-                    .aspectRatio(2/3, contentMode: .fit)
-                    .padding(1)
-                    .onTapGesture {
-                        viewModel.choose(card)
-                    }
-            }
+    private var cards: some View {
+        AspectVGrid(viewModel.cards, aspectRatio: aspectRatio) { card in
+            CardView(card)
+                .padding(5)
+                .onTapGesture {
+                    viewModel.choose(card)
+                }
         }
         .foregroundColor(.red)
     }
