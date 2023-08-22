@@ -11,6 +11,8 @@ struct EmojiMemoryGameView: View {
     
     @ObservedObject var viewModel: EmojiMemoryGame
     
+    typealias Card = MemoryGame<String>.Card
+    
     private let aspectRatio: CGFloat = 2/3
     private let spacing: CGFloat = 5
     
@@ -18,11 +20,13 @@ struct EmojiMemoryGameView: View {
         VStack {
             cards
                 .foregroundColor(viewModel.color)
-                .animation(.default, value: viewModel.cards)
             
-            Button("shuffle") {
-                viewModel.shuffle()
+            HStack {
+                score
+                Spacer()
+                shuffle
             }
+            .font(.largeTitle)
         }
         .padding()
     }
@@ -31,10 +35,30 @@ struct EmojiMemoryGameView: View {
         AspectVGrid(viewModel.cards, aspectRatio: aspectRatio) { card in
             CardView(card)
                 .padding(spacing)
+                .overlay(FlyingNumber(number: scoreChange(causedBy: card)))
                 .onTapGesture {
-                    viewModel.choose(card)
+                    withAnimation(.easeOut(duration: 1)) {
+                        viewModel.choose(card)
+                    }
                 }
         }
+    }
+    
+    private var score: some View {
+        Text("Score: \(viewModel.score)")
+            .animation(nil)
+    }
+    
+    private var shuffle: some View {
+        Button("Shuffle") {
+            withAnimation() {
+                viewModel.shuffle()
+            }
+        }
+    }
+    
+    private func scoreChange(causedBy card: Card) -> Int {
+        2
     }
 }
 

@@ -43,6 +43,8 @@ struct CardView: View {
                     .aspectRatio(1, contentMode: .fit)
                     .shadow(color: .gray, radius: 3, x: 5, y: 5)
                     .padding(Constants.Pie.inset)
+                    .rotationEffect(.degrees(card.isMatched ? 360 : 0))
+                    .animation(.spin(duration: 1), value: card.isMatched)
             )
             .padding(Constants.inset)
             .cardify(isFaceUp: card.isFaceUp)
@@ -68,5 +70,11 @@ struct CardView_Previews: PreviewProvider {
         }
         .padding()
         .foregroundColor(.yellow)
+    }
+}
+
+extension Animation {
+    static func spin(duration: TimeInterval) -> Animation {
+        .linear(duration: 1).repeatForever(autoreverses: false)
     }
 }

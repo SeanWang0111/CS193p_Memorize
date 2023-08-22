@@ -10,9 +10,16 @@ import Foundation
 struct MemoryGame<CardContent> where CardContent: Equatable {
     
     struct Card: Equatable, Identifiable, CustomDebugStringConvertible {
-        var isFaceUp: Bool = false
+        var isFaceUp: Bool = false { didSet {
+                guard oldValue && !isFaceUp else { return }
+                hasBeenSeen = true
+            }
+        }
+        
         var isMatched: Bool = false
         var content: CardContent
+        
+        var hasBeenSeen = false
         
         var id: String
         var debugDescription: String {
@@ -21,6 +28,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     private(set) var cards: Array<Card>
+    private(set) var score = 0
     
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get { cards.indices.filter { index in cards[index].isFaceUp }.only }
@@ -44,6 +52,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             if cards[potentialMatchIndex].content == cards[chooseIndex].content {
                 cards[potentialMatchIndex].isMatched = true
                 cards[chooseIndex].isMatched = true
+                score += 2
+            } else {
+                
             }
         } else {
             indexOfTheOneAndOnlyFaceUpCard = chooseIndex
