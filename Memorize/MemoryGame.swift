@@ -115,7 +115,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     mutating func shuffle() {
         cards.shuffle()
-        print(cards)
     }
 }
 

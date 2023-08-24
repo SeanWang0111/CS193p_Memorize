@@ -21,7 +21,7 @@ struct Cardify: ViewModifier, Animatable {
     }
     
     private struct Constants {
-        static let cornerRadius: CGFloat = 12
+        static let cornerRadius: CGFloat = 5
         static let lineWidth: CGFloat = 2
     }
     
@@ -37,7 +37,14 @@ struct Cardify: ViewModifier, Animatable {
                 .overlay(content)
                 .opacity(isFaceUp ? 1 : 0)
             
-            shape.fill()
+            shape
+                .foregroundColor(.clear)
+                .background() {
+                    Image("cardCover")
+                        .resizable()
+                        .edgesIgnoringSafeArea(.all)
+                        .cornerRadius(Constants.cornerRadius)
+                }
                 .opacity(isFaceUp ? 0 : 1)
         }
         .rotation3DEffect(.degrees(rotation), axis: (x: 0, y: 1, z: 0))

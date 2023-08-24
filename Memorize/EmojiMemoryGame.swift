@@ -15,8 +15,8 @@ class EmojiMemoryGame: ObservableObject {
     
     private static let emojis = ["✈️", "🚅", "🛰️", "🚀", "🚑", "🛻", "🚝", "🚁", "🛳️", "🚤", "🚔", "🚍", "🚘", "🚖", "🚢", "🛥️", "⛵️", "🛶", "🛸", "🚂", "🚆", "🛩️", "🚈", "🚞"]
     
-    private static func createMemoryGame() -> MemoryGame<String> {
-        return MemoryGame(numberOfPairsOfCards: 10) { pairIndex in
+    private static func createMemoryGame(_ number: Int = 10) -> MemoryGame<String> {
+        return MemoryGame(numberOfPairsOfCards: number) { pairIndex in
             return emojis.indices.contains(pairIndex) ? emojis[pairIndex] : "⁉️"
         }
     }
@@ -26,7 +26,7 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     var color: Color {
-        .red
+        .blue
     }
     
     var score: Int {
@@ -34,12 +34,16 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     // MARK: - Intents
-    func shuffle() {
-        model.shuffle()
+    func change(_ number: Int) {
+        model = EmojiMemoryGame.createMemoryGame(number)
     }
     
     func choose(_ card: Card) {
         model.choose(card)
+    }
+    
+    func shuffle() {
+        model.shuffle()
     }
 }
 

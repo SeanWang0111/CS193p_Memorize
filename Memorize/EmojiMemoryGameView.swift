@@ -35,13 +35,18 @@ struct EmojiMemoryGameView: View {
             HStack {
                 score
                 Spacer()
-                deck.foregroundColor(.red)
+                deck.foregroundColor(viewModel.color)
                 Spacer()
                 shuffle
             }
             .font(.largeTitle)
         }
         .padding()
+        .background() {
+            Image("bg_moon")
+                .resizable()
+                .edgesIgnoringSafeArea(.all)
+        }
     }
     
     private var cards: some View {
