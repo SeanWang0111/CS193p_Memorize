@@ -10,26 +10,17 @@ import Foundation
 struct MemoryGame<CardContent> where CardContent: Equatable {
     
     struct Card: Equatable, Identifiable, CustomDebugStringConvertible {
-        var isFaceUp: Bool = false {
-            didSet {
-                if isFaceUp {
-                    startUsingBonusTime()
-                } else {
-                    stopUsingBonusTime()
-                }
-                
-                guard oldValue && !isFaceUp else { return }
-                hasBeenSeen = true
-            }
-        }
+        var isFaceUp: Bool = false { didSet {
+            isFaceUp ? startUsingBonusTime() : stopUsingBonusTime()
+            guard oldValue && !isFaceUp else { return }
+            hasBeenSeen = true
+        }}
         
-        var isMatched: Bool = false {
-            didSet {
-                if isMatched {
-                    stopUsingBonusTime()
-                }
-            }
-        }
+        var isMatched: Bool = false { didSet {
+            guard isMatched else { return }
+            stopUsingBonusTime()
+        }}
+        
         var content: CardContent
         
         var hasBeenSeen = false

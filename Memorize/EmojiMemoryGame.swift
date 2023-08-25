@@ -13,19 +13,36 @@ class EmojiMemoryGame: ObservableObject {
     
     typealias Card = MemoryGame<String>.Card
     
-    private static let trafficIcon: [String] = ["✈️", "🚅", "🛰️", "🚀", "🚑", "🛻", "🚝", "🚁", "🛳️", "🚤", "🚔", "🚍", "🚘", "🚖", "🚢", "🛥️", "⛵️", "🛶", "🛸", "🚂", "🚆", "🛩️", "🚈", "🚞"]
+    private static let traffic: [String] = ArrayManager.trafficIcon
+    private static let starSign: [String] = ArrayManager.starSignIcon
+    private static var poker: [String] = ArrayManager.pokerIcon
     
     private var cardColor: Color = .black
     
-    init(model: MemoryGame<String> = createMemoryGame(), number: Int = 10) {
-        self.model = EmojiMemoryGame.createMemoryGame(number)
+    enum Topic {
+        case traffic
+        case starSign
+        case poker
+    }
+    
+    init(model: MemoryGame<String> = createMemoryGame(),
+         number: Int = 10,
+         topic: Topic = .traffic) {
+        self.model = EmojiMemoryGame.createMemoryGame(number, topic)
         shuffle()
         chooseColor()
     }
     
-    private static func createMemoryGame(_ number: Int = 10) -> MemoryGame<String> {
+    private static func createMemoryGame(_ number: Int = 10,
+                                         _ topic: Topic = .traffic) -> MemoryGame<String> {
         return MemoryGame(numberOfPairsOfCards: number) { pairIndex in
-            return trafficIcon.indices.contains(pairIndex) ? trafficIcon[pairIndex] : "⁉️"
+            var card = [String]()
+            switch topic {
+            case .traffic:  card = traffic.shuffled()
+            case .starSign: card = starSign.shuffled()
+            case .poker:    card = poker.shuffled()
+            }
+            return card.indices.contains(pairIndex) ? card[pairIndex] : "⁉️"
         }
     }
     
@@ -47,8 +64,7 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     public func chooseColor() {
-        let colorArr: [Color] = [.black, .blue, .brown, .cyan, .gray, .green, .indigo, .mint, .orange, .pink, .purple, .red, .teal, .yellow]
-        cardColor = colorArr[Int.random(in: 0..<colorArr.count)]
+        cardColor = ArrayManager.colorArr[Int.random(in: 0..<ArrayManager.colorArr.count)]
     }
     
     public func shuffle() {

@@ -49,6 +49,7 @@ struct CardView: View {
     
     var cardContents: some View {
         Text(card.content)
+            .foregroundColor(.black)
             .font(.system(size: Constants.FontSize.largest))
             .minimumScaleFactor(Constants.FontSize.scaleFactor)
             .multilineTextAlignment(.center)
