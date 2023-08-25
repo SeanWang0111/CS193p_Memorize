@@ -13,36 +13,45 @@ class EmojiMemoryGame: ObservableObject {
     
     typealias Card = MemoryGame<String>.Card
     
-    private static let emojis = ["✈️", "🚅", "🛰️", "🚀", "🚑", "🛻", "🚝", "🚁", "🛳️", "🚤", "🚔", "🚍", "🚘", "🚖", "🚢", "🛥️", "⛵️", "🛶", "🛸", "🚂", "🚆", "🛩️", "🚈", "🚞"]
+    private static let trafficIcon: [String] = ["✈️", "🚅", "🛰️", "🚀", "🚑", "🛻", "🚝", "🚁", "🛳️", "🚤", "🚔", "🚍", "🚘", "🚖", "🚢", "🛥️", "⛵️", "🛶", "🛸", "🚂", "🚆", "🛩️", "🚈", "🚞"]
+    
+    private var cardColor: Color = .black
+    
+    init(model: MemoryGame<String> = createMemoryGame(), number: Int = 10) {
+        self.model = EmojiMemoryGame.createMemoryGame(number)
+        shuffle()
+        chooseColor()
+    }
     
     private static func createMemoryGame(_ number: Int = 10) -> MemoryGame<String> {
         return MemoryGame(numberOfPairsOfCards: number) { pairIndex in
-            return emojis.indices.contains(pairIndex) ? emojis[pairIndex] : "⁉️"
+            return trafficIcon.indices.contains(pairIndex) ? trafficIcon[pairIndex] : "⁉️"
         }
     }
     
-    var cards: Array<Card> {
+    public var cards: Array<Card> {
         model.cards
     }
     
-    var color: Color {
-        .blue
+    public var color: Color {
+        cardColor
     }
     
-    var score: Int {
+    public var score: Int {
         model.score
     }
     
     // MARK: - Intents
-    func change(_ number: Int) {
-        model = EmojiMemoryGame.createMemoryGame(number)
-    }
-    
-    func choose(_ card: Card) {
+    public func choose(_ card: Card) {
         model.choose(card)
     }
     
-    func shuffle() {
+    public func chooseColor() {
+        let colorArr: [Color] = [.black, .blue, .brown, .cyan, .gray, .green, .indigo, .mint, .orange, .pink, .purple, .red, .teal, .yellow]
+        cardColor = colorArr[Int.random(in: 0..<colorArr.count)]
+    }
+    
+    public func shuffle() {
         model.shuffle()
     }
 }

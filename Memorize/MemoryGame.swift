@@ -117,9 +117,3 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         cards.shuffle()
     }
 }
-
-extension Array {
-    var only: Element? {
-        count == 1 ? first : nil
-    }
-}

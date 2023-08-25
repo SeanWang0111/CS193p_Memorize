@@ -28,6 +28,8 @@ struct EmojiMemoryGameView: View {
         viewModel.cards.filter { !isDealt($0) }
     }
     
+    public var returnAction: () -> Void
+    
     var body: some View {
         VStack {
             cards.foregroundColor(viewModel.color)
@@ -43,10 +45,18 @@ struct EmojiMemoryGameView: View {
         }
         .padding()
         .background() {
-            Image("bg_moon")
-                .resizable()
-                .edgesIgnoringSafeArea(.all)
+            background
         }
+        .onDisappear() {
+            returnAction()
+        }
+    }
+    
+    // MARK: - View Layout
+    private var background: some View {
+        Image("bg_moon")
+            .resizable()
+            .edgesIgnoringSafeArea(.all)
     }
     
     private var cards: some View {
@@ -92,6 +102,7 @@ struct EmojiMemoryGameView: View {
         }
     }
     
+    // MARK: - Function
     private func choose(_ card: Card) {
         withAnimation {
             let scoreBeforeChoosing = viewModel.score
@@ -123,6 +134,6 @@ struct EmojiMemoryGameView: View {
 
 struct EmojiMemoryGameViewView_Previews: PreviewProvider {
     static var previews: some View {
-        EmojiMemoryGameView(viewModel: EmojiMemoryGame())
+        EmojiMemoryGameView(viewModel: EmojiMemoryGame(), returnAction: {})
     }
 }

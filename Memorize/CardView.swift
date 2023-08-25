@@ -79,9 +79,3 @@ struct CardView_Previews: PreviewProvider {
         .foregroundColor(.yellow)
     }
 }
-
-extension Animation {
-    static func spin(duration: TimeInterval) -> Animation {
-        .linear(duration: 1).repeatForever(autoreverses: false)
-    }
-}
