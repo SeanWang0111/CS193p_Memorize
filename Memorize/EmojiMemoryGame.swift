@@ -15,7 +15,8 @@ class EmojiMemoryGame: ObservableObject {
     
     private static let traffic: [String] = ArrayManager.trafficIcon
     private static let starSign: [String] = ArrayManager.starSignIcon
-    private static var poker: [String] = ArrayManager.pokerIcon
+    private static let poker: [String] = ArrayManager.pokerIcon
+    private static let dogImage: [String] = ArrayManager.dogImageArr
     
     private var cardColor: Color = .black
     
@@ -23,6 +24,7 @@ class EmojiMemoryGame: ObservableObject {
         case traffic
         case starSign
         case poker
+        case dog
     }
     
     init(model: MemoryGame<String> = createMemoryGame(),
@@ -33,15 +35,17 @@ class EmojiMemoryGame: ObservableObject {
         chooseColor()
     }
     
-    private static func createMemoryGame(_ number: Int = 10,
-                                         _ topic: Topic = .traffic) -> MemoryGame<String> {
-        return MemoryGame(numberOfPairsOfCards: number) { pairIndex in
-            var card = [String]()
-            switch topic {
-            case .traffic:  card = traffic.shuffled()
-            case .starSign: card = starSign.shuffled()
-            case .poker:    card = poker.shuffled()
-            }
+    private static func createMemoryGame(_ number: Int = 10, _ topic: Topic = .traffic) -> MemoryGame<String> {
+        var card = [String]()
+        card.removeAll()
+        switch topic {
+        case .traffic:  card = traffic.shuffled()
+        case .starSign: card = starSign.shuffled()
+        case .poker:    card = poker.shuffled()
+        case .dog:      card = dogImage.shuffled()
+        }
+        
+        return MemoryGame(isImage: topic == .dog, numberOfPairsOfCards: number) { pairIndex in
             return card.indices.contains(pairIndex) ? card[pairIndex] : "⁉️"
         }
     }

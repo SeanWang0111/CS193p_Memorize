@@ -12,7 +12,13 @@ struct HomePage: View {
     
     @State var cardCount: Int = 10
     @State var topicType: Int = 0 { didSet {
-        topicMode = topicType == 0 ? .traffic : topicType == 1 ? .starSign : .poker
+        switch topicType {
+        case 0:  topicMode = .traffic
+        case 1:  topicMode = .starSign
+        case 2:  topicMode = .poker
+        case 3:  topicMode = .dog
+        default: topicMode = .traffic
+        }
     }}
     @State var topicMode: EmojiMemoryGame.Topic = .traffic
     

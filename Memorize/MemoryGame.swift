@@ -21,6 +21,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             stopUsingBonusTime()
         }}
         
+        var isImage: Bool = false
+        
         var content: CardContent
         
         var hasBeenSeen = false
@@ -72,12 +74,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         set { cards.indices.forEach { cards[$0].isFaceUp = $0 == newValue } }
     }
     
-    init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
+    init(isImage: Bool, numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
         cards = []
         for pairIndex in 0..<max(2, numberOfPairsOfCards) {
             let content = cardContentFactory(pairIndex)
-            cards.append(Card(content: content, id: "\(pairIndex + 1)a"))
-            cards.append(Card(content: content, id: "\(pairIndex + 1)b"))
+            cards.append(Card(isImage: isImage, content: content, id: "\(pairIndex + 1)a"))
+            cards.append(Card(isImage: isImage,content: content, id: "\(pairIndex + 1)b"))
         }
     }
     

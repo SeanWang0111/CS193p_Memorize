@@ -37,7 +37,13 @@ struct CardView: View {
             if card.isFaceUp || !card.isMatched  {
                 Pie(endAngle: .degrees(card.bonusPercentRemaining * 360))
                     .opacity(Constants.Pie.opacity)
-                    .overlay(cardContents.padding(Constants.Pie.inset))
+                    .overlay {
+                        if card.isImage {
+                            imageContents
+                        } else {
+                            cardContents.padding(Constants.Pie.inset)
+                        }
+                    }
                     .padding(Constants.inset)
                     .cardify(isFaceUp: card.isFaceUp)
                     .transition(.scale)
@@ -58,6 +64,14 @@ struct CardView: View {
             .rotationEffect(.degrees(card.isMatched ? 360 : 0))
             .animation(.spin(duration: 1), value: card.isMatched)
     }
+    
+    var imageContents: some View {
+        Image(card.content)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .clipShape(Circle())
+            .shadow(color: .black, radius: 5)
+    }
 }
 
 struct CardView_Previews: PreviewProvider {
@@ -72,7 +86,7 @@ struct CardView_Previews: PreviewProvider {
                 CardView(Card(content: "X", id: "test1"))
             }
             HStack {
-                CardView(Card(isFaceUp: true, content: "This is a very long string and I hope it fits", id: "test1"))
+                CardView(Card(isFaceUp: true, isImage: true, content: ArrayManager.dogImageArr[23], id: "test1"))
                 CardView(Card(isMatched: true, content: "X", id: "test1"))
             }
         }

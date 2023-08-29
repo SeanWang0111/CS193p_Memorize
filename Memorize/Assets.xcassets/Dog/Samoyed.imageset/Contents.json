@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Samoyed.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
