@@ -10,7 +10,7 @@ import SwiftUI
 
 class ArrayManager {
     
-    static let colorArr: [Color] = [.blue, .brown, .cyan, .gray, .green, .indigo, .mint, .orange, .pink, .purple, .red, .teal, .yellow]
+    static let colorArr: [Color] = [.black, .blue, .brown, .cyan, .gray, .green, .indigo, .mint, .orange, .pink, .purple, .red, .teal, .yellow]
     
     static let dogImageArr: [String] = ["Akita", "Beagle", "BerneseMountain", "BichonFrise", "BorderCollie", "Bulldog", "Chihuahua", "ChowChow", "Corgi", "Dachshund", "Dalmatian", "DobermanPinscher", "GermanShepherd", "GoldenRetriever", "Husky", "Labrador", "Maltese", "Papillon", "Pomeranian", "Poodle", "Pug", "Samoyed", "ShetlandSheepdog", "Shiba", "YorkshireTerrier"]
     

@@ -33,6 +33,26 @@ struct CardView: View {
     }
     
     var body: some View {
+        Content
+    }
+}
+
+// MARK: - Subviews
+extension CardView {
+    
+    private var cardContents: some View {
+        Text(card.content)
+            .foregroundColor(card.content.contains("♥︎") || card.content.contains("♦︎") ? .red : .black)
+            .font(.system(size: Constants.FontSize.largest))
+            .minimumScaleFactor(Constants.FontSize.scaleFactor)
+            .multilineTextAlignment(.center)
+            .aspectRatio(contentMode: .fit)
+            .shadow(color: .gray, radius: 1, x: 1, y: 1)
+            .rotationEffect(.degrees(card.isMatched ? 360 : 0))
+            .animation(.spin(duration: 1), value: card.isMatched)
+    }
+    
+    private var Content: some View {
         TimelineView(.animation) { timeline in
             if card.isFaceUp || !card.isMatched  {
                 Pie(endAngle: .degrees(card.bonusPercentRemaining * 360))
@@ -53,19 +73,7 @@ struct CardView: View {
         }
     }
     
-    var cardContents: some View {
-        Text(card.content)
-            .foregroundColor(.black)
-            .font(.system(size: Constants.FontSize.largest))
-            .minimumScaleFactor(Constants.FontSize.scaleFactor)
-            .multilineTextAlignment(.center)
-            .aspectRatio(1, contentMode: .fit)
-            .shadow(color: .gray, radius: 3, x: 5, y: 5)
-            .rotationEffect(.degrees(card.isMatched ? 360 : 0))
-            .animation(.spin(duration: 1), value: card.isMatched)
-    }
-    
-    var imageContents: some View {
+    private var imageContents: some View {
         Image(card.content)
             .resizable()
             .aspectRatio(contentMode: .fit)
@@ -82,7 +90,6 @@ struct CardView_Previews: PreviewProvider {
         VStack {
             HStack {
                 CardView(Card(isFaceUp: true, content: "X", id: "test1"))
-                    .aspectRatio(4/3, contentMode: .fit)
                 CardView(Card(content: "X", id: "test1"))
             }
             HStack {

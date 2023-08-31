@@ -58,8 +58,24 @@ class EmojiMemoryGame: ObservableObject {
         cardColor
     }
     
+    public var combo: Int {
+        model.maxCombo
+    }
+    
+    public var completePair: Int {
+        model.completePair
+    }
+    
+    public var errorTime: Int {
+        model.errorTime
+    }
+    
     public var score: Int {
         model.score
+    }
+    
+    public var totalPair: Int {
+        model.totalPair
     }
     
     // MARK: - Intents

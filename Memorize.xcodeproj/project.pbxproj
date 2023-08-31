@@ -19,6 +19,7 @@
 		067C76FD2A9747D600AD3CF2 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067C76FC2A9747D600AD3CF2 /* HomePage.swift */; };
 		067C77062A9767D500AD3CF2 /* BIRD.gif in Resources */ = {isa = PBXBuildFile; fileRef = 067C77052A9767D500AD3CF2 /* BIRD.gif */; };
 		067C77082A97681200AD3CF2 /* GAME.gif in Resources */ = {isa = PBXBuildFile; fileRef = 067C77072A97681200AD3CF2 /* GAME.gif */; };
+		06AC61462A9E5DFE004E6BF2 /* PLAY.gif in Resources */ = {isa = PBXBuildFile; fileRef = 06AC61452A9E5DFE004E6BF2 /* PLAY.gif */; };
 		06C3D9B92A98C12500EF7A0A /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 06C3D9B82A98C12500EF7A0A /* SDWebImageSwiftUI */; };
 		06C3D9BD2A98C78E00EF7A0A /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C3D9BC2A98C78E00EF7A0A /* Array.swift */; };
 		06C3D9C02A98C88E00EF7A0A /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C3D9BF2A98C88E00EF7A0A /* Animation.swift */; };
@@ -41,6 +42,7 @@
 		067C76FC2A9747D600AD3CF2 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		067C77052A9767D500AD3CF2 /* BIRD.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = BIRD.gif; sourceTree = "<group>"; };
 		067C77072A97681200AD3CF2 /* GAME.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = GAME.gif; sourceTree = "<group>"; };
+		06AC61452A9E5DFE004E6BF2 /* PLAY.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = PLAY.gif; sourceTree = "<group>"; };
 		06C3D9BC2A98C78E00EF7A0A /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		06C3D9BF2A98C88E00EF7A0A /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		06C3D9C62A990B7300EF7A0A /* ArrayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayManager.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 		067C77002A97503700AD3CF2 /* GIF */ = {
 			isa = PBXGroup;
 			children = (
+				06AC61452A9E5DFE004E6BF2 /* PLAY.gif */,
 				067C77072A97681200AD3CF2 /* GAME.gif */,
 				067C77052A9767D500AD3CF2 /* BIRD.gif */,
 			);
@@ -223,6 +226,7 @@
 				064DB6382A820E97001C8A63 /* Preview Assets.xcassets in Resources */,
 				067C77062A9767D500AD3CF2 /* BIRD.gif in Resources */,
 				067C77082A97681200AD3CF2 /* GAME.gif in Resources */,
+				06AC61462A9E5DFE004E6BF2 /* PLAY.gif in Resources */,
 				064DB6352A820E97001C8A63 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

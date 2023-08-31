@@ -67,7 +67,16 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     private(set) var cards: Array<Card>
-    private(set) var score = 0
+    private(set) var score: Int = 0
+    private(set) var totalPair: Int = 2
+    private(set) var completePair: Int = 0
+    private(set) var maxCombo: Int = 0
+    private(set) var errorTime: Int = 0
+    
+    private var combo: Int = 0 { didSet {
+        guard combo >= maxCombo else { return }
+        maxCombo = combo
+    }}
     
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get { cards.indices.filter { index in cards[index].isFaceUp }.only }
@@ -76,6 +85,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     init(isImage: Bool, numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
         cards = []
+        totalPair = numberOfPairsOfCards
+        
         for pairIndex in 0..<max(2, numberOfPairsOfCards) {
             let content = cardContentFactory(pairIndex)
             cards.append(Card(isImage: isImage, content: content, id: "\(pairIndex + 1)a"))
@@ -92,7 +103,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 cards[potentialMatchIndex].isMatched = true
                 cards[chooseIndex].isMatched = true
                 score += 2 + cards[chooseIndex].bonus + cards[potentialMatchIndex].bonus
+                completePair += 1
+                combo += 1
+                
             } else {
+                combo = 0
+                errorTime += 1
                 if cards[chooseIndex].hasBeenSeen {
                     score -= 1
                 }
@@ -104,9 +120,15 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             indexOfTheOneAndOnlyFaceUpCard = chooseIndex
         }
         cards[chooseIndex].isFaceUp = true
+        guard completePair == totalPair else { return }
+        finishNC()
     }
     
     mutating func shuffle() {
         cards.shuffle()
+    }
+    
+    func finishNC() {
+        NotificationCenter.default.post(name: NSNotification.Name("GameOver"), object: nil)
     }
 }
